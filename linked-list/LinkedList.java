@@ -1,47 +1,48 @@
-public class LinkedList {
-    Node head;
+public class LinkedList<T> {
+    private Node<T> head;
 
-    private static class Node {
-        Node next;
-        int data;
+    private static class Node<T> {
+        private T data;
+        private Node<T> next;
 
-        public Node(int data) {
+        public Node(T data) {
             this.data = data;
             this.next = null;
         }
     }
 
     // Add a new node to the end of the linked list.
-    public void append(int data) {
-        if (head == null) {
-            head = new Node(data);
+    public void append(T data) {
+        if (isEmpty()) {
+            head = new Node<T>(data);
             return;
         }
 
-        Node cur = head;
+        Node<T> cur = head;
         while (cur.next != null) {
             cur = cur.next;
         }
-        cur.next = new Node(data);
+        cur.next = new Node<T>(data);
     }
 
     // Add a new node to the beginning of the linked list.
-    public void prepend(int data) {
-        Node node = new Node(data);
+    public void prepend(T data) {
+        Node<T> node = new Node<T>(data);
         node.next = head;
         head = node;
     }
 
     // Delete the node in the linked list with the given value.
-    public void delete(int data) {
-        if (head == null)
+    public void delete(T data) {
+        if (isEmpty())
             return;
+
         if (head.data == data) {
             head = head.next;
             return;
         }
 
-        Node cur = head;
+        Node<T> cur = head;
         while (cur.next != null) {
             if (cur.next.data == data) {
                 cur.next = cur.next.next;
@@ -53,11 +54,11 @@ public class LinkedList {
 
     // Returns true if the linked list contains the given data; otherwise, returns
     // false.
-    public boolean contains(int data) {
-        if (head == null)
+    public boolean contains(T data) {
+        if (isEmpty())
             return false;
 
-        Node cur = head;
+        Node<T> cur = head;
         while (cur.next != null) {
             if (cur.next.data == data) {
                 return true;
@@ -72,12 +73,16 @@ public class LinkedList {
         if (head == null)
             return 0;
 
-        Node cur = head;
-        int count = 0;
+        Node<T> cur = head;
+        int count = 1;
         while (cur.next != null) {
             count++;
             cur = cur.next;
         }
         return count;
+    }
+
+    public boolean isEmpty() {
+        return head == null;
     }
 }
